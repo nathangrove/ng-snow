@@ -1,3 +1,15 @@
+/**
+* HttpClient
+*   This client will return a standard Http client that is built into angular2.
+*   
+*   This client will auth the X-UserToken to the request header for authenticated API requests
+*   once deployed to the ServiceNow platform. 
+*
+*   If your application is running on the localhost development server, it will work
+*   without this custom wrapper. However, your appplication will break once deployed.
+*    
+*/
+
 import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
 
