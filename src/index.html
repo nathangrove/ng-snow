@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+  <!-- Ugh...jelly...some people love it....I do not -->
+  <j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null">
+  <div style="display:none"><g:evaluate object="true">var g_ck=gs.getSession().getSessionToken(); var scope=gs.getProperty('glide.appcreator.company.code')</g:evaluate></div>
+
+  <html>
+    <head>
+      <meta charset="utf-8" />
+      <title>Ng2snow</title>
+    
+    <!-- Init some variables 'n things. -->
+      <script>(function() { window['_app_base'] = window.location.pathname;window['_g_ck']="$[g_ck]";document.sys_id="$[sys_id]";})()</script>
+    
+    <!-- bootstrap...why not use a CDN? Its so much easier-->
+      <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <link href="{{styles}}.cssdbx" rel="stylesheet" type="text/css"></link>
+      <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    </head>
+    <body>
+      <app-root>Loading...</app-root>
+    </body>
+  </html>
+
+
+  <!-- 
+      ****************************************************************************
+      * BUNDLED FILES
+      ****************************************************************************
+      * We have to use jelly to include our bundled files. This tries to default
+      * to finding 4 files (inline,main,vendor,polyfill) within the same scope as the ui page
+      * if your files are named differently, then you will need to manually add them.
+      ****************************************************************************
+    <g:requires name="scope.script.jsdbx" />
+  -->
+  <g:requires name="$[this].inline.jsdbx" />
+  <g:requires name="$[this].polyfills.jsdbx" />
+  <g:requires name="$[this].vendor.jsdbx" />
+  <g:requires name="$[this].main.jsdbx" />
+  
+  <!--
+      ****************************************************************************
+      * LIVE RELOAD
+      ****************************************************************************
+      * Uncomment this to enable live reload. This requires that you have the live
+      * reload application (https://github.com/nathangrove/servicenow-livereload.git)
+      * installed on your instance. This isn't really necessary for Angular2 
+      * development. Developing locally is much better. 
+      ****************************************************************************
+      <g:requires name="x_80477_livereload.ui_page_livereload.jsdbx" />
+  -->   
+    
+</j:jelly>

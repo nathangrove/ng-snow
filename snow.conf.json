@@ -1,0 +1,25 @@
+{
+  "snow": {
+    "instance": ".service-now.com",
+    "username": "",
+    "password": ""
+  },
+  "application": {
+    "name": "",
+    "scope": ""
+  },
+  "files": {
+    "html": {
+      "index": ""
+    },
+    "js": {
+      "inline": "",
+      "polyfills": "",
+      "vendor": "",
+      "main": ""
+    },
+    "css": {
+      "styles": ""
+    }
+  }
+}
