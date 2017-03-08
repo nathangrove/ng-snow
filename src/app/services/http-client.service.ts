@@ -11,7 +11,7 @@
 */
 
 import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import {Http, RequestOptions, Headers} from '@angular/http';
 
 @Injectable()
 export class HttpClient {
@@ -25,35 +25,27 @@ export class HttpClient {
     }
   }
 
-  get(url) {
-    let headers = new Headers();
-    this.createAuthorizationHeader(headers);
-    return this.http.get(url, {
-      headers: headers
-    });
+  get(url,options = new RequestOptions) {
+    options.headers = new Headers();
+    this.createAuthorizationHeader(options.headers);
+    return this.http.get(url,options);
   }
 
-  post(url, data) {
+  post(url, data, options = new RequestOptions) {
     let headers = new Headers();
     this.createAuthorizationHeader(headers);
-    return this.http.post(url, data, {
-      headers: headers
-    });
+    return this.http.post(url, data, options);
   }
 
-  put(url, data) {
+  put(url, data, options = new RequestOptions) {
     let headers = new Headers();
     this.createAuthorizationHeader(headers);
-    return this.http.put(url, data, {
-      headers: headers
-    });
+    return this.http.put(url, data, options);
   }
 
-  delete(url) {
+  delete(url, options = new RequestOptions) {
     let headers = new Headers();
     this.createAuthorizationHeader(headers);
-    return this.http.delete(url, {
-      headers: headers
-    });
+    return this.http.delete(url, options);
   }
 }
