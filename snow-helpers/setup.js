@@ -121,7 +121,7 @@ function check_config(success,error,prompt_num){
     return;
   }
 
-  if (!prompts[prompt_num].current || prompts[prompt_num].current == ''){
+  if (!prompts[prompt_num].current || prompts[prompt_num].current == '' || !prompts[prompt_num].properties.answer.pattern.test(prompts[prompt_num].current)){
     prompt.get(prompts[prompt_num], function(err,result){
       if (err){
         error(err);
