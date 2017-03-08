@@ -15,8 +15,7 @@ This starter project is intended to help you build and deploy angular2 applicati
 ## Installation
 1. Clone repo (obviously)
 2. Run: `npm install`
-3. Configure `snow.conf.json` with your instance url, username, password, desired application name, desired application scope (eg. `ng2snow`)
-4. Run: `npm run setup`
+3. Run: `npm run setup`
 
 ## Usage
 
