@@ -19,7 +19,6 @@ export class HttpClient {
   constructor(private http: Http) {}
 
   createAuthorizationHeader(headers: Headers) {
-    console.log(window.location);
     if (typeof window['_g_ck'] !== 'undefined' && window['_g_ck'] !== '') {
       headers.append('X-UserToken', window['_g_ck']);
     }
@@ -27,25 +26,25 @@ export class HttpClient {
 
   get(url,options = new RequestOptions) {
     options.headers = new Headers();
-    this.createAuthorizationHeader(options.headers);
+    if (/^\/api/.test(url)) this.createAuthorizationHeader(options.headers);
     return this.http.get(url,options);
   }
 
   post(url, data, options = new RequestOptions) {
     let headers = new Headers();
-    this.createAuthorizationHeader(headers);
+    if (/^\/api/.test(url)) this.createAuthorizationHeader(options.headers);
     return this.http.post(url, data, options);
   }
 
   put(url, data, options = new RequestOptions) {
     let headers = new Headers();
-    this.createAuthorizationHeader(headers);
+    if (/^\/api/.test(url)) this.createAuthorizationHeader(options.headers);
     return this.http.put(url, data, options);
   }
 
   delete(url, options = new RequestOptions) {
     let headers = new Headers();
-    this.createAuthorizationHeader(headers);
+    if (/^\/api/.test(url)) this.createAuthorizationHeader(options.headers);
     return this.http.delete(url, options);
   }
 }
