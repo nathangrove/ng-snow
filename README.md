@@ -15,7 +15,7 @@ This starter project is intended to help you build and deploy angular2 applicati
 ## Installation
 1. Clone repo (obviously)
 2. Run: `npm install`
-3. Run: `npm run setup`
+4. Run: `npm run setup`
 
 ## Usage
 
@@ -45,7 +45,6 @@ Contributions are very welcomed.
 5. Submit a pull request
 
 ## Future wishlist
-* Setup file prompting for information to build the snow.conf.json file
 * More intelligent application setup within ServiceNow
   - Application name collision detection
   - Scope name suggestions
