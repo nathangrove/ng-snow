@@ -5,7 +5,13 @@ var colors = require("colors/safe");
 
 
 // get the configuration file...
-var config = JSON.parse(fs.readFileSync('./snow.conf.json'));
+var config = {};
+try {
+    config = JSON.parse(fs.readFileSync('./snow.conf.json'));
+} catch (err) {
+    console.log("No configuration file exists. Let's create one.");
+}
+
 console.log('\n\n');
 prompt.start();
 
@@ -61,6 +67,9 @@ function check_config(success,error,prompt_num){
     prompt_num = 0;
   }
 
+  if (!config.snow) config.snow = {};
+  if (!config.application) config.application = {};
+
   var prompts = [{
     attr: 'snow.instance',
     current: config.snow.instance,
@@ -77,7 +86,7 @@ function check_config(success,error,prompt_num){
     current: config.snow.auth,
     properties: {
       answer: {
-        pattern: /^[a-zA-Z0-9-]+$/,
+        pattern: /^[a-zA-Z0-9-_]+$/,
         description: colors.green('Enter your username'),
         required: true
       }
@@ -87,7 +96,7 @@ function check_config(success,error,prompt_num){
     current: config.snow.auth,
     properties: {
       answer: {
-        pattern: /^[a-zA-Z0-9\s\-]+$/,
+        pattern: /^[a-zA-Z0-9\s\-_\$\!]+$/,
         description: colors.green('Enter your password'),
         required: true,
         hidden: true
@@ -98,7 +107,7 @@ function check_config(success,error,prompt_num){
     current: config.application.name,
     properties: {
       answer: {
-        pattern: /^[a-zA-Z0-9-]+$/,
+        pattern: /^[a-zA-Z0-9-\s_]+$/,
         description: colors.green('Enter an application name'),
         required: true
       }
@@ -172,38 +181,47 @@ function run(){
       var req = http.request(options,function(res){
         var statusCode = res.statusCode;
         if (statusCode == 200){
-          console.log(colors.red('The scope "' + config.application.scope + '" already exists. Continuing with automated setup could overwite data or otherwise make it inaccessible.\nTHIS COULD BREAK ANY CURRENT UI PAGES, UI SCRIPTS, OR CONTENT CSS IN THE SCOPE IF THEY HAVE THE SAME NAME.'));
-          prompt.get({
-            properties: {                  
-              confirm: {
-                pattern: /^(yes|no|y|n)$/gi,
-                description: colors.yellow('Are you sure you want to continue auto setup? (y/N)'),
-                required: false,
-                default: ''
-              }
-            }
-          }, function (err, result){
-            if (!result){
-              console.log('Exiting');
-              return;
-            }
-            var c = result.confirm.toLowerCase();
-            if (c!='y' && c!='yes'){
-              console.log('Exiting.');
-              return;
-            }
 
-            create_files();
-              
-          });
-          return;
-        }
-        if (statusCode !== 404){
-          console.log("Something went wrong trying to check for the scope. HTTP Code: " + statusCode);
-          return;
-        }
+            var rawData = '';
+            res.on('data', (chunk) => rawData += chunk );
+            res.on('end', () => {
+              console.log(colors.red('The scope "' + config.application.scope + '" already exists. Continuing with automated setup could overwite data or otherwise make it inaccessible.\nTHIS COULD BREAK ANY CURRENT UI PAGES, UI SCRIPTS, OR CONTENT CSS IN THE SCOPE IF THEY HAVE THE SAME NAME.'));
+              prompt.get({
+                properties: {                  
+                  confirm: {
+                    pattern: /^(yes|no|y|n)$/gi,
+                    description: colors.yellow('Are you sure you want to continue auto setup? (y/N)'),
+                    required: false,
+                    default: ''
+                  }
+                }
+              }, function (err, result){
+                if (!result){
+                  console.log('Exiting');
+                  return;
+                }
+                var c = result.confirm.toLowerCase();
+                if (c!='y' && c!='yes'){
+                  console.log('Exiting.');
+                  return;
+                }
 
-        create_scope();
+                var record = JSON.parse(rawData).result[0];
+                config.application.sys_id = record.sys_id;
+                create_files();
+                  
+              });
+
+            });
+
+          } else if (statusCode !== 404){
+            console.log("Something went wrong trying to check for the scope. HTTP Code: " + statusCode);
+
+          } else {
+            create_scope();
+
+          }
+
 
       });
       req.end();
