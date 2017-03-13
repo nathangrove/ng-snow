@@ -207,6 +207,7 @@ function run(){
                 }
 
                 var record = JSON.parse(rawData).result[0];
+                config.application.name = record.name;
                 config.application.sys_id = record.sys_id;
                 create_files();
                   
