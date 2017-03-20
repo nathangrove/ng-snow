@@ -185,7 +185,7 @@ function run(){
             var rawData = '';
             res.on('data', (chunk) => rawData += chunk );
             res.on('end', () => {
-              console.log(colors.red('The scope "' + config.application.scope + '" already exists. Continuing with automated setup could overwite data or otherwise make it inaccessible.\nTHIS COULD BREAK ANY CURRENT UI PAGES, UI SCRIPTS, OR CONTENT CSS IN THE SCOPE IF THEY HAVE THE SAME NAME.'));
+              console.log(colors.red('The scope "' + config.application.scope + '" already exists. Continuing with automated setup could overwrite data or otherwise make it inaccessible.\nTHIS COULD BREAK ANY CURRENT UI PAGES, UI SCRIPTS, OR CONTENT CSS IN THE SCOPE IF THEY HAVE THE SAME NAME.'));
               prompt.get({
                 properties: {                  
                   confirm: {
