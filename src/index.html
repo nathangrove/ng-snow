@@ -2,7 +2,7 @@
 
   <!-- Ugh...jelly...some people love it....I do not -->
   <j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null">
-  <div style="display:none"><g:evaluate object="true">var g_ck=gs.getSession().getSessionToken(); var scope=gs.getProperty('glide.appcreator.company.code')</g:evaluate></div>
+  <div style="display:none"><g:evaluate object="true">var g_ck=gs.getSession().getSessionToken();</g:evaluate></div>
 
   <html>
     <head>
@@ -10,7 +10,7 @@
       <title>Ng2snow</title>
     
     <!-- Init some variables 'n things. -->
-      <script>(function() { window['_app_base'] = window.location.pathname;window['_g_ck']="$[g_ck]";document.sys_id="$[sys_id]";})()</script>
+      <script>(function() { window['_app_base'] = window.location.pathname;window['_g_ck']="$[g_ck]";})()</script>
     
     <!-- bootstrap...why not use a CDN? Its so much easier-->
       <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
@@ -48,7 +48,7 @@
       * installed on your instance. This isn't really necessary for Angular2 
       * development. Developing locally is much better. 
       ****************************************************************************
-      <g:requires name="x_ngrove_livereload.ui_page_livereload.jsdbx" />
+      <g:requires name="x_ngrove_livereload.ui_page_livereload.jsdbx?page=$[sys_id]" />
   -->   
     
 </j:jelly>
