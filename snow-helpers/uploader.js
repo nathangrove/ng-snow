@@ -73,11 +73,9 @@ function upload_file(file,table,sys_id){
   body[fields[table]] = fs.readFileSync('./dist/' + file).toString();
 
   if (table == 'sys_ui_page') {
-    for (key in config.files.css){
-      var check = '{{' + key + '}}';
-      var regex = new RegExp(check,'g');
-      body[fields[table]] = body[fields[table]].toString().replace(regex,config.files.css[key]);
-    }
+    for (key in config.files.css)
+      body[fields[table]] = body[fields[table]].toString().replace('</head>','<link href="' + config.files.css[key] + '.cssdbx" rel="stylesheet" type="text/css"></link></head>');
+    
 
     // strip some build garabage
     body[fields[table]] = body[fields[table]].replace('<base href="/">','');
