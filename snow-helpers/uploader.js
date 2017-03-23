@@ -81,6 +81,7 @@ function upload_file(file,table,sys_id){
 
     // strip some build garabage
     body[fields[table]] = body[fields[table]].replace('<base href="/">','');
+    body[fields[table]] = body[fields[table]].replace(/<(?:script|link).*(?:src|href)=['"]+(?!http).*\.[js|css]+.*(?:\/>|script>)/g,'');
   }
 
   console.log("Managing images for file: " + file);
