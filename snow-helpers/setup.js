@@ -86,7 +86,7 @@ function check_config(success,error,prompt_num){
     current: config.snow.auth,
     properties: {
       answer: {
-        pattern: /^[a-zA-Z0-9-_]+$/,
+        pattern: /^[a-zA-Z0-9-_\.]+$/,
         description: colors.green('Enter your username'),
         required: true
       }
