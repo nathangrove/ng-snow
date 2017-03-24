@@ -147,7 +147,7 @@ function manage_images(content,success,error){
   var completed = 0;
 
 
-  var regex = /((?!http)[^"|']+\.(?:jpg|png|bmp|gif|jpeg|ico|svg)+)/g;
+  var regex = /((?!http)[^"|'|(]+(?:..\/)*\.(?:jpg|png|bmp|gif|jpeg|ico|svg)+)/g;
   var m;
   while ((m = regex.exec(content)) !== null) {
       if (m.index === regex.lastIndex) regex.lastIndex++;
@@ -162,8 +162,9 @@ function manage_images(content,success,error){
   for (var i=0; i < images.length; i++){
 
     var filename = images[i];
-    if (images[i].indexOf('/') == 0) filename = './dist' + images[i];
-    else filename = './dist/' + images[i];
+    filename = filename.replace(/\.\.\//g,'');
+    if (filename.indexOf('/') == 0) filename = './dist' + filename;
+    else filename = './dist/' + filename;
 
     (function(image){
       upload_image(filename,function(new_name){
@@ -239,7 +240,7 @@ function delete_unused_images(uploaded_images,callback){
     var req = http.request(options, function(res) {
       const statusCode = res.statusCode; 
       if (statusCode !== 201) {
-        error("Image ppload failed with status code " + statusCode + " for image: " + file);
+        error("Image upload failed with status code " + statusCode + " for image: " + file);
         return;
       }
 
