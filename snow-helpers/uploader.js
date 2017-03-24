@@ -126,15 +126,6 @@ function upload_file(file,table,sys_id){
 
 
 
-
-
-
-
-
-
-
-
-
 /*
   Image managing functions
 */
@@ -147,7 +138,7 @@ function manage_images(content,success,error){
   var completed = 0;
 
 
-  var regex = /((?!http)[^"|'|(]+(?:..\/)*\.(?:jpg|png|bmp|gif|jpeg|ico|svg)+)/g;
+  var regex = /((?!http)[^"|'|(]+(?:..\/)*\.(?:jpg|png|bmp|gif|jpeg|ico|svg)+)\\?(?=["')])/ig;
   var m;
   while ((m = regex.exec(content)) !== null) {
       if (m.index === regex.lastIndex) regex.lastIndex++;
