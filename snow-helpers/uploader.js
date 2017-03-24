@@ -215,7 +215,7 @@ function delete_unused_images(uploaded_images,callback){
       upload(image,sys_id,function(){
         success(filename);
       },function(err){
-        error(err);
+        error("Image upload error:",err);
       }); 
     },function(err){
       console.log("db_image record fetching/creation failed with error: ",err);
@@ -242,7 +242,7 @@ function delete_unused_images(uploaded_images,callback){
     var req = http.request(options, function(res) {
       const statusCode = res.statusCode; 
       if (statusCode !== 201) {
-        error("Image upload failed with status code " + statusCode + " for image: " + file);
+        error("Image upload failed with status code " + statusCode);
         return;
       }
 
