@@ -1,5 +1,6 @@
 var fs = require('fs');
 var http = require('https');
+var colors = require("colors/safe");
 
 // get the configuration file...
 var config = JSON.parse(fs.readFileSync('./snow.conf.json'));
@@ -89,14 +90,14 @@ function upload_file(file,table,sys_id){
     var req = http.request(options, function(res) {
       const statusCode = res.statusCode; 
       if (statusCode !== 200) {
-        console.log("Upload failed with status code " + statusCode + " for file:",file);
+        console.log(colors.red("Upload failed with status code " + statusCode + " for file:",file));
         return;
       }
 
       var rawData = '';
       res.on('data', (chunk) => rawData += chunk );
       res.on('end', () => {
-        console.log("Done uploading file " + file);
+        console.log(colors.green("Done uploading file " + file));
       });
     });
     req.write(JSON.stringify(body));
@@ -107,14 +108,14 @@ function upload_file(file,table,sys_id){
     var req = http.request(options, function(res) {
       const statusCode = res.statusCode; 
       if (statusCode !== 200) {
-        console.log("Upload failed with status code " + statusCode + " for file:",file);
+        console.log(colors.red("Upload failed with status code " + statusCode + " for file:",file));
         return;
       }
 
       var rawData = '';
       res.on('data', (chunk) => rawData += chunk );
       res.on('end', () => {
-        console.log("Done uploading file " + file);
+        console.log(colors.green("Done uploading file " + file));
       });
     });
     req.write(JSON.stringify(body));
@@ -149,6 +150,7 @@ function manage_images(content,success,error){
   }
 
   images = images.filter(function(elem, pos) { return images.indexOf(elem) == pos; });
+  if (images.length == 0){ success(content); return; }
 
   for (var i=0; i < images.length; i++){
 
@@ -156,6 +158,19 @@ function manage_images(content,success,error){
     filename = filename.replace(/\.\.\//g,'');
     if (filename.indexOf('/') == 0) filename = './dist' + filename;
     else filename = './dist/' + filename;
+
+    if (!fs.existsSync(filename)){
+      console.log(colors.yellow("Image: " + filename + " does not exist. Skipping it."));
+      completed++;
+
+      if (completed == images.length){
+        delete_unused_images(uploaded_images,function(){ 
+          success(content); 
+        });
+      }
+
+      continue;
+    } 
 
     (function(image){
       upload_image(filename,function(new_name){

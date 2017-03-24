@@ -1,25 +1,26 @@
 {
   "snow": {
-    "instance": ".service-now.com",
-    "username": "",
-    "password": ""
+    "instance": "dev28806.service-now.com",
+    "auth": "Basic YWRtaW46YWRtaW4xMjM=",
+    "endpoint": "x_60972_imagetest_index.do"
   },
   "application": {
-    "name": "",
-    "scope": ""
+    "name": "imagetest",
+    "scope": "x_60972_imagetest",
+    "sys_id": "d260f5fb0f253200ebad3e4ce1050eec"
   },
   "files": {
     "html": {
-      "index": ""
+      "index": "aa60f5fb0f253200ebad3e4ce1050eed"
     },
     "js": {
-      "inline": "",
-      "polyfills": "",
-      "vendor": "",
-      "main": ""
+      "inline": "2660f17f0f253200ebad3e4ce1050ebc",
+      "polyfills": "ea60f9fb0f253200ebad3e4ce1050ef1",
+      "vendor": "ee60f5fb0f253200ebad3e4ce1050ef6",
+      "main": "2e60f5fb0f253200ebad3e4ce1050ef5"
     },
     "css": {
-      "styles": ""
+      "styles": "ae60f9fb0f253200ebad3e4ce1050ef2"
     }
   }
 }
