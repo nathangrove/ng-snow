@@ -163,11 +163,7 @@ function manage_images(content,success,error){
       console.log(colors.yellow("Image: " + filename + " does not exist. Skipping it."));
       completed++;
 
-      if (completed == images.length){
-        delete_unused_images(uploaded_images,function(){ 
-          success(content); 
-        });
-      }
+      if (completed == images.length) success(content); 
 
       continue;
     } 
