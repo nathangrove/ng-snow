@@ -75,7 +75,7 @@ function check_config(success,error,prompt_num){
     current: config.snow.instance,
     properties: {
       answer: {
-        pattern: /^[a-zA-Z0-9-]+\.service-now\.com$/,
+        pattern: /^.+\.service-now\.com$/,
         description: colors.green('Enter your instance url (eg. dev.service-now.com)'),
         message: colors.red('Enter in the FQDN (eg. dev.service-now.com)'),
         required: true
