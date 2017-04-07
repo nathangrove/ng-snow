@@ -39,7 +39,7 @@ const appRoutes: Routes = [
   ],
   providers: [
     HttpClient,
-    { provide: APP_BASE_HREF, useValue: window['_app_base'] || '/' }
+    { provide: APP_BASE_HREF, useValue: '/' }
   ],
   bootstrap: [AppComponent]
 })
