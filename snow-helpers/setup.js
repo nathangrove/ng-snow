@@ -32,8 +32,7 @@ prompt.get({
     return;
   }
   
-  var c = result.confirm.toLowerCase();
-  if (c!='y' && c!='yes'){
+  if (!/^(yes|y)$/gi.test(result.confirm)){
     console.log('Exiting.');
     return;
   }
