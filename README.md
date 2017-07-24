@@ -1,4 +1,4 @@
-# NG2-SNow Starter Project
+# NG-SNow Starter Project
 This starter project is intended to help you build and deploy angular2 applications on the ServiceNow platform. Before you ask me "Why angular2?" I will go ahead and answer that question, because its awesome. Thats why. Here are a few reasons why I like it:
 
 1. Modularity
