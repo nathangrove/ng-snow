@@ -8,21 +8,14 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { SnowInterceptor } from './services/snow.interceptor';
 
-
 import { AppComponent } from './app.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { HomeComponent } from './home/home.component';
 
 
 const appRoutes: Routes = [
-
-  // dedicated routes
   { path: '', component: HomeComponent },
-
-  // 404
   { path: '404', component: NotFoundComponent },
-
-  // catchall
   { path: '*', redirectTo: '404' },
   { path: '**', redirectTo: '404' }
 ];

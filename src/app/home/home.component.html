@@ -1,3 +1,14 @@
-<p>
-  home works!
-</p>
+<div *ngIf="!users">Loading User Data...</div>
+
+<div *ngIf="users">
+  
+<h1>System Users</h1>
+  <table class='table table-striped'>
+    <tr><th>Name</th><th>Email</th><th>Created</th></tr>
+    <tr *ngFor="let user of users">
+      <td>{{ user.first_name }} {{ user.last_name }}</td>
+      <td>{{ user.email }}</td>
+      <td>{{ user.sys_created_on | date: 'mediumDate'}}</td>
+    </tr>
+  </table>
+</div>
