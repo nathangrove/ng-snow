@@ -1,12 +1,13 @@
 {
   "snow": {
-    "instance": ".service-now.com",
-    "username": "",
-    "password": ""
+    "instance": "",
+    "auth": "",
+    "endpoint": ""
   },
   "application": {
     "name": "",
-    "scope": ""
+    "scope": "",
+    "sys_id": ""
   },
   "files": {
     "html": {
