@@ -8,7 +8,7 @@ if (config.snow && config.snow.username && config.snow.password){
   config.snow.auth = "Basic " + new Buffer(config.snow.username + ":" + config.snow.password).toString('base64');
   delete config.snow.username;
   delete config.snow.password;
-  fs.writeFile("./snow.conf.json",JSON.stringify(config,null,2));
+  fs.writeFileSync("./snow.conf.json",JSON.stringify(config,null,2));
 }
 
 if (config.snow 
@@ -33,4 +33,4 @@ if (config.snow
 }
 
 
-fs.writeFile("./proxy.conf.json",JSON.stringify(data,null,2));
+fs.writeFileSync("./proxy.conf.json",JSON.stringify(data,null,2));
