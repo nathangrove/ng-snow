@@ -116,7 +116,7 @@ function check_config(success,error,prompt_num){
     current: config.application.scope,
     properties: {
       answer: {
-        pattern: /^[a-zA-Z0-9-]+$/,
+        pattern: /^[a-zA-Z0-9-_]+$/,
         description: colors.green('Enter an application scope'),
         required: true
       }
