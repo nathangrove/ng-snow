@@ -26,19 +26,16 @@ fs.readdir("./dist",function(err,files){
     if (file.match(/^index.html$/g)){
       upload_file(file,'sys_ui_page',config.files.html.index);
 
-    } else if (file.match(/^main\.[0-9a-z]+\.bundle\.js$/)){
+    } else if (file.match(/^main\.[0-9a-z]+\.js$/)){
       upload_file(file,'sys_ui_script',config.files.js.main);
 
-    } else if (file.match(/^inline\.[0-9a-z]+\.bundle\.js$/g)){
-      upload_file(file,'sys_ui_script',config.files.js.inline);
-    
-    } else if (file.match(/^polyfills\.[0-9a-z]+\.bundle\.js$/g)){
+    } else if (file.match(/^polyfills\.[0-9a-z]+\.js$/g)){
       upload_file(file,'sys_ui_script',config.files.js.polyfills);
     
-    } else if (file.match(/^vendor\.[0-9a-z]+\.bundle\.js$/g)){
-      upload_file(file,'sys_ui_script',config.files.js.vendor);
+    } else if (file.match(/^runtime\.[0-9a-z]+\.js$/g)){
+      upload_file(file,'sys_ui_script',config.files.js.runtime);
     
-    } else if (file.match(/^styles\.[0-9a-z]+\.bundle\.css$/g)){
+    } else if (file.match(/^styles\.[0-9a-z]+\.css$/g)){
       upload_file(file,'content_css',config.files.css.styles);
     }
   }
@@ -73,14 +70,21 @@ function upload_file(file,table,sys_id){
   body[fields[table]] = fs.readFileSync('./dist/' + file).toString();
 
   if (table == 'sys_ui_page') {
+
+    // strip some build stuff not needed for SNow
+    body[fields[table]] = body[fields[table]].replace('<base href="/">','');
+    body[fields[table]] = body[fields[table]].replace(/<link .*href="styles\.[0-9a-f]+\.css">/,'');
+    body[fields[table]] = body[fields[table]].replace(/<\/head>/g,'<link href="{{styles}}.cssdbx" rel="stylesheet" type="text/css" /></head>');
+    body[fields[table]] = body[fields[table]].replace(/(<link.*)\/>/g,"$1><\/link>");
+    body[fields[table]] = body[fields[table]].replace(/<script.*src.*<\/script>/g,'');
+
     for (key in config.files.css){
       var check = '{{' + key + '}}';
       var regex = new RegExp(check,'g');
       body[fields[table]] = body[fields[table]].toString().replace(regex,config.files.css[key]);
     }
 
-    // strip some build garabage
-    body[fields[table]] = body[fields[table]].replace('<base href="/">','');
+
   }
 
   var req = http.request(options, function(res) {

@@ -116,7 +116,7 @@ function check_config(success,error,prompt_num){
     current: config.application.scope,
     properties: {
       answer: {
-        pattern: /^[a-zA-Z0-9-_]+$/,
+        pattern: /^[a-zA-Z0-9-]+$/,
         description: colors.green('Enter an application scope'),
         required: true
       }
@@ -322,26 +322,12 @@ function create_files(){
       active: "true",
       use_scoped_format: "true",
       global: "false",
-      script_name: "inline",
+      script_name: "runtime",
       script: "",
       sys_class_name: "sys_ui_script",
       sys_package: config.application.sys_id,
-      name: config.application.scope + ".inline",
-      sys_name: config.application.scope + ".inline",
-      sys_scope: config.application.sys_id
-    }
-  },{
-    table: "sys_ui_script",
-    body: {
-      active: "true",
-      use_scoped_format: "true",
-      global: "false",
-      script_name: "vendor",
-      script: "",
-      sys_class_name: "sys_ui_script",
-      sys_package: config.application.sys_id,
-      name: config.application.scope + ".vendor",
-      sys_name: config.application.scope + ".vendor",
+      name: config.application.scope + ".runtime",
+      sys_name: config.application.scope + ".runtime",
       sys_scope: config.application.sys_id
     }
   },{
@@ -403,9 +389,8 @@ function create_files(){
 
           if (file.body.name == 'index')                                  config.files.html['index'] = record.sys_id;
           if (file.body.name == 'index')                                  config.snow.endpoint = record.endpoint;
-          if (file.body.name == config.application.scope + '.inline')    config.files.js['inline'] = record.sys_id;
           if (file.body.name == config.application.scope + '.main')      config.files.js['main'] = record.sys_id;
-          if (file.body.name == config.application.scope + '.vendor')    config.files.js['vendor'] = record.sys_id;
+          if (file.body.name == config.application.scope + '.runtime')    config.files.js['runtime'] = record.sys_id;
           if (file.body.name == config.application.scope + '.polyfills') config.files.js['polyfills'] = record.sys_id;
           if (file.body.name == 'styles')                                 config.files.css['styles'] = record.sys_id;
 
