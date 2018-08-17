@@ -19,24 +19,39 @@ if (config.snow.instance == '' || config.snow.auth == ''){
 }
 
 
+var md5s = {};
+
+var indexFile;
+
 fs.readdir("./dist",function(err,files){
 
   for (var i=0; i < files.length; i++){
     var file = files[i]; 
+    var match;
     if (file.match(/^index.html$/g)){
-      upload_file(file,'sys_ui_page',config.files.html.index);
+      indexFile = file;
+      if (Object.keys(md5s).length == 4) upload_file(indexFile,'sys_ui_page',config.files.html.index);
 
-    } else if (file.match(/^main\.[0-9a-z]+\.js$/)){
+    } else if (match = file.match(/^main\.([0-9a-f]+)\.js$/)){
+      md5s.main = match[1];
       upload_file(file,'sys_ui_script',config.files.js.main);
+      if (Object.keys(md5s).length == 4 && indexFile) upload_file(indexFile,'sys_ui_page',config.files.html.index);
 
-    } else if (file.match(/^polyfills\.[0-9a-z]+\.js$/g)){
+    } else if (match = file.match(/^polyfills\.([0-9a-f]+)\.js$/)){
+      md5s.polyfills = match[1];
       upload_file(file,'sys_ui_script',config.files.js.polyfills);
+      if (Object.keys(md5s).length == 4 && indexFile) upload_file(indexFile,'sys_ui_page',config.files.html.index);
     
-    } else if (file.match(/^runtime\.[0-9a-z]+\.js$/g)){
+    } else if (match = file.match(/^runtime\.([0-9a-f]+)\.js$/)){
+      md5s.runtime = match[1];
       upload_file(file,'sys_ui_script',config.files.js.runtime);
+      if (Object.keys(md5s).length == 4 && indexFile) upload_file(indexFile,'sys_ui_page',config.files.html.index);
     
-    } else if (file.match(/^styles\.[0-9a-z]+\.css$/g)){
+    } else if (match = file.match(/^styles\.([0-9a-f]+)\.css$/)){
+      md5s.styles = match[1];
       upload_file(file,'content_css',config.files.css.styles);
+      if (Object.keys(md5s).length == 4 && indexFile) upload_file(indexFile,'sys_ui_page',config.files.html.index);
+
     }
   }
 
@@ -74,7 +89,7 @@ function upload_file(file,table,sys_id){
     // strip some build stuff not needed for SNow
     body[fields[table]] = body[fields[table]].replace('<base href="/">','');
     body[fields[table]] = body[fields[table]].replace(/<link .*href="styles\.[0-9a-f]+\.css">/,'');
-    body[fields[table]] = body[fields[table]].replace(/<\/head>/g,'<link href="{{styles}}.cssdbx" rel="stylesheet" type="text/css" /></head>');
+    body[fields[table]] = body[fields[table]].replace(/<\/head>/g,'<link href="{{styles}}.cssdbx?no-cache={{styles-md5}}" rel="stylesheet" type="text/css" /></head>');
     body[fields[table]] = body[fields[table]].replace(/(<link.*)\/>/g,"$1><\/link>");
     body[fields[table]] = body[fields[table]].replace(/<script.*src.*<\/script>/g,'');
 
@@ -83,7 +98,11 @@ function upload_file(file,table,sys_id){
       var regex = new RegExp(check,'g');
       body[fields[table]] = body[fields[table]].toString().replace(regex,config.files.css[key]);
     }
-
+    for (key in md5s){
+      var check = '{{' + key + '-md5}}';
+      var regex = new RegExp(check,'g');
+      body[fields[table]] = body[fields[table]].toString().replace(regex,md5s[key]);
+    }
 
   }
 
