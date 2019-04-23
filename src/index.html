@@ -2,28 +2,25 @@
 
   <!-- Ugh...jelly...some people love it....I do not -->
   <j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null">
-  <div style="display:none"><g:evaluate object="true">var g_ck=gs.getSession().getSessionToken();</g:evaluate></div>
+    <div style="display:none"><g:evaluate object="true">var sessiontoken=gs.getSession().getSessionToken();</g:evaluate></div>
 
   <html>
     <head>
       <meta charset="utf-8" />
       <title>ng-snow</title>
-    
-    <!-- Init some variables 'n things. -->
-      <script>(function() { window['_g_ck']="$[g_ck]"; })()</script>
-    
+
     <!-- bootstrap...why not use a CDN? Its so much easier-->
       <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"></link>
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <link rel="icon" type="image/x-icon" href="favicon.ico"></link>
     </head>
     <body>
-      <app-root>Loading...</app-root>
+      <app-root token="$[sessiontoken]">Loading...</app-root>
     </body>
   </html>
 
 
-  <!-- 
+  <!--
       ****************************************************************************
       * BUNDLED FILES
       ****************************************************************************
@@ -36,17 +33,17 @@
   <g:requires name="$[this].runtime.jsdbx?no-cache={{runtime-md5}}" />
   <g:requires name="$[this].polyfills.jsdbx?no-cache={{polyfills-md5}}" />
   <g:requires name="$[this].main.jsdbx?no-cache={{main-md5}}" />
-  
+
   <!--
       ****************************************************************************
       * LIVE RELOAD
       ****************************************************************************
       * Uncomment this to enable live reload. This requires that you have the live
       * reload application (https://github.com/nathangrove/servicenow-livereload.git)
-      * installed on your instance. This isn't really necessary for Angular2 
-      * development. Developing locally is much better. 
+      * installed on your instance. This isn't really necessary for Angular2
+      * development. Developing locally is much better.
       ****************************************************************************
       <g:requires name="x_ngrove_livereload.ui_page_livereload.jsdbx?page=$[sys_id]" />
-  -->   
-    
+  -->
+
 </j:jelly>

@@ -17,9 +17,10 @@ import {Observable} from 'rxjs/Observable';
 export class SnowInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (/^\/api/.test(req.url)) {
+      let token = document.getElementsByTagName("app-root")[0].getAttribute("token");
       let changedReq;
-      if (typeof window['_g_ck'] !== 'undefined' && window['_g_ck'] !== '') {
-        changedReq = req.clone({headers: req.headers.set('X-UserToken', window['_g_ck'])});
+      if (typeof token !== 'undefined' && token !== '') {
+        changedReq = req.clone({headers: req.headers.set('X-UserToken', token )});
       } else { changedReq = req; }
       return next.handle(changedReq);
     } else {
